@@ -31,7 +31,7 @@ class Group:
         :return: The midpoint of self.start_time and self.end_time
         """
 
-        return (self.end_time - self.start_time) / 2
+        return (self.end_time + self.start_time) / 2
 
     @staticmethod
     def generate_group(data: pd.DataFrame):
