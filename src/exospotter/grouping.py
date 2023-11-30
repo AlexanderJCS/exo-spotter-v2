@@ -14,7 +14,7 @@ class Datapoint:
 @dataclass(frozen=True)
 class Group:
     """
-    Used to represent a group of datapoints between two time intervals.
+    Used to represent a group of lightcurve datapoints between two time intervals.
     """
 
     start_time: float
@@ -29,3 +29,15 @@ class Group:
         """
 
         return (self.end_time - self.start_time) / 2
+
+    @staticmethod
+    def generate_group(datapoints: list[Datapoint]):
+        """
+        Generates a group from a list of datapoints
+
+        :param datapoints: The datapoints to convert into a group
+        :return: A group object that references the datapoints
+        """
+
+        raise NotImplementedError()
+
