@@ -33,6 +33,16 @@ class Group:
 
         return (self.end_time + self.start_time) / 2
 
+    def asdict(self) -> dict:
+        return {
+            "start_time": self.start_time,
+            "middle_time": self.middle_time(),
+            "end_time": self.end_time,
+            "mean_flux": self.mean_flux,
+            "peak_flux": self.peak_flux,
+            "min_flux": self.min_flux
+        }
+
     @staticmethod
     def generate_group(data: pd.DataFrame):
         """
@@ -66,14 +76,16 @@ def group_datapoints(datapoints: pd.DataFrame, max_gap: float) -> Iterable[Group
     """
 
     last_time = datapoints.time[0]
+    last_index = 0
+
     for index, row in datapoints.iterrows():
         if row.time - last_time > max_gap:
             try:
-                group = Group.generate_group(datapoints[:index])
+                group = Group.generate_group(datapoints[last_index:index])
             except ValueError:
                 continue
 
             yield group
 
-            datapoints = datapoints[index:]
             last_time = row.time
+            last_index = index
